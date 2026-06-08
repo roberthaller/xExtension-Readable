@@ -169,22 +169,22 @@ class ReadableExtension extends Minz_Extension {
 	    $cstore = ["ff" => [], "merc" => [], "read" => []];
 	    foreach ( $this->feeds as $f ) {
 	            //I rather encode only a few 'true' entries, than 400+ false entries + the few 'true' entries	    
-		    if ((bool)Minz_Request::param("read_".$f->id(), 0)){
+		    if ((bool)Minz_Request::paramInt("read_".$f->id(), 0)){
 			    $rstore[$f->id()] = true;
 		    }
 
-		    if ((bool)Minz_Request::param("merc_".$f->id(), 0) ) {
+		    if ((bool)Minz_Request::paramInt("merc_".$f->id(), 0) ) {
 			    $mstore[$f->id()] = true;
 		    }
 
-		    if ((bool)Minz_Request::param("ff_".$f->id(), 0) ) {
+		    if ((bool)Minz_Request::paramInt("ff_".$f->id(), 0) ) {
 			    $fstore[$f->id()] = true;
 		    }
 	    }
 
 	    foreach ( $this->cats as $c ) {
 	    	foreach ( array_keys($cstore) as $v ) {
-		    if ((bool)Minz_Request::param($v . "_cat_".$c->id(), 0)){
+		    if ((bool)Minz_Request::paramInt($v . "_cat_".$c->id(), 0)){
 			    $cstore[$v][$c->id()] = true;
 		
 		    }
@@ -197,9 +197,9 @@ class ReadableExtension extends Minz_Extension {
 	    FreshRSS_Context::$user_conf->read_ext_cat = (string)json_encode($cstore);
 
 
-	    FreshRSS_Context::$user_conf->read_ext_merc_host = (string)Minz_Request::param('read_mercury_host');
-	    FreshRSS_Context::$user_conf->read_ext_read_host = (string)Minz_Request::param('read_readability_host');
-	    FreshRSS_Context::$user_conf->read_ext_five_host = (string)Minz_Request::param('read_fivefilters_host');
+	    FreshRSS_Context::$user_conf->read_ext_merc_host = (string)Minz_Request::paramString('read_mercury_host');
+	    FreshRSS_Context::$user_conf->read_ext_read_host = (string)Minz_Request::paramString('read_readability_host');
+	    FreshRSS_Context::$user_conf->read_ext_five_host = (string)Minz_Request::paramString('read_fivefilters_host');
 	
 	    FreshRSS_Context::$user_conf->save();
 	}
